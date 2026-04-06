@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>카이카이 한자 대한검정회 5급</title>
+<title>대한검정회 5급 한자 학습</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif; background: #f9f9f7; color: #1a1a1a; min-height: 100vh; }
@@ -16,7 +16,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-seri
 .prog-label-text { font-size: 13px; color: #555; }
 .prog-label-count { font-size: 13px; color: #888; }
 .prog-track { height: 6px; background: #e0e0dc; border-radius: 3px; overflow: hidden; }
-.prog-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #378add, #7f77dd, #ef9f27); transition: width 0.6s ease; }
+.prog-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #378add, #7f77dd, #ef9f27, #1d9e75); transition: width 0.6s ease; }
 .stages { max-width: 520px; margin: 0 auto; padding: 0 1.5rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .stage-card { border-radius: 14px; padding: 1.25rem 1.25rem 1rem; text-decoration: none; display: flex; flex-direction: column; gap: 10px; transition: transform 0.15s, box-shadow 0.15s; position: relative; overflow: hidden; }
 .stage-card.active { background: #fff; border: 0.5px solid #e0e0dc; cursor: pointer; }
@@ -54,85 +54,52 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-seri
 <body>
 <div class="hero">
   <div class="hero-badge">대한검정회 한자급수자격검정</div>
-  <div class="hero-title">카이카이 한자 5급 한자 학습</div>
+  <div class="hero-title">5급 한자 학습</div>
   <div class="hero-sub">단계를 선택해서 공부를 시작해요!<br>한자 학습 → 한자어 → 퀴즈 → 테스트 순서로 해보세요 😊</div>
 </div>
-
 <div class="progress-section">
   <div class="prog-label-row">
     <span class="prog-label-text">전체 진도</span>
-    <span class="prog-label-count">3 / 8 단계 완성</span>
+    <span class="prog-label-count">4 / 8 단계 완성</span>
   </div>
   <div class="prog-track">
-    <div class="prog-bar" style="width:37.5%"></div>
+    <div class="prog-bar" style="width:50%"></div>
   </div>
 </div>
-
 <div class="stages" id="stages-grid"></div>
-
 <div class="notice">
   <div class="notice-box">🔒 잠긴 단계는 순서대로 추가될 예정이에요</div>
 </div>
-
 <script>
-const STAGES = [
-  { dan:1, chars:'春夏秋冬花風友各部限', file:'hanja_5gup_1dan_final.html', color:'#378add', done:true },
-  { dan:2, chars:'太去信便成當親高才對', file:'hanja_5gup_2dan_final.html', color:'#7f77dd', done:true },
-  { dan:3, chars:'性形活短示朝社毛重樂', file:'hanja_5gup_3dan_final.html', color:'#ef9f27', done:true },
-  { dan:4, chars:'', file:'', color:'#1d9e75', done:false },
-  { dan:5, chars:'', file:'', color:'#d85a30', done:false },
-  { dan:6, chars:'', file:'', color:'#d4537e', done:false },
-  { dan:7, chars:'', file:'', color:'#639922', done:false },
-  { dan:8, chars:'', file:'', color:'#185fa5', done:false },
+const STAGES=[
+  {dan:1,chars:'春夏秋冬花風友各部限',file:'hanja_5gup_1dan_final.html',color:'#378add',done:true},
+  {dan:2,chars:'太去信便成當親高才對',file:'hanja_5gup_2dan_final.html',color:'#7f77dd',done:true},
+  {dan:3,chars:'性形活短示朝社毛重樂',file:'hanja_5gup_3dan_final.html',color:'#ef9f27',done:true},
+  {dan:4,chars:'功見行會作弱血放神新',file:'hanja_5gup_4dan_final.html',color:'#1d9e75',done:true},
+  {dan:5,chars:'',file:'',color:'#d85a30',done:false},
+  {dan:6,chars:'',file:'',color:'#d4537e',done:false},
+  {dan:7,chars:'',file:'',color:'#639922',done:false},
+  {dan:8,chars:'',file:'',color:'#185fa5',done:false},
 ];
-
-function buildStages() {
-  const grid = document.getElementById('stages-grid');
-  STAGES.forEach(s => {
-    const card = document.createElement(s.done ? 'a' : 'div');
-    card.className = 'stage-card ' + (s.done ? 'active' : 'locked');
-    if (s.done) card.href = s.file;
-
-    const bar = document.createElement('div');
-    bar.className = 'stage-color-bar';
-    bar.style.background = s.done ? s.color : '#e0e0dc';
-
-    const num = document.createElement('div');
-    num.className = 'stage-num';
-    num.textContent = s.dan + '단계';
-
-    const title = document.createElement('div');
-    title.className = 'stage-title';
-    title.textContent = s.done ? '학습하기' : '준비 중';
-
-    const chars = document.createElement('div');
-    chars.className = 'stage-chars';
-    chars.textContent = s.done
-      ? s.chars.split('').join(' ')
-      : '· · · · · · · · · ·';
-
-    const footer = document.createElement('div');
-    footer.className = 'stage-footer';
-    const count = document.createElement('span');
-    count.className = 'stage-count';
-    count.textContent = '10자 · 4가지 활동';
-    const arrow = document.createElement('span');
-    arrow.textContent = s.done ? '→' : '🔒';
-    footer.appendChild(count);
-    footer.appendChild(arrow);
-
-    card.appendChild(bar);
-    card.appendChild(num);
-    card.appendChild(title);
-    card.appendChild(chars);
-    card.appendChild(footer);
-
-    if (!s.done) {
-      const lock = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      lock.setAttribute('viewBox','0 0 24 24');
-      lock.setAttribute('fill','none');
-      lock.setAttribute('stroke','currentColor');
-      lock.setAttribute('stroke-width','2');
+function buildStages(){
+  const grid=document.getElementById('stages-grid');
+  STAGES.forEach(s=>{
+    const card=document.createElement(s.done?'a':'div');
+    card.className='stage-card '+(s.done?'active':'locked');
+    if(s.done) card.href=s.file;
+    const bar=document.createElement('div'); bar.className='stage-color-bar'; bar.style.background=s.done?s.color:'#e0e0dc';
+    const num=document.createElement('div'); num.className='stage-num'; num.textContent=s.dan+'단계';
+    const title=document.createElement('div'); title.className='stage-title'; title.textContent=s.done?'학습하기':'준비 중';
+    const chars=document.createElement('div'); chars.className='stage-chars'; chars.textContent=s.done?s.chars.split('').join(' '):'· · · · · · · · · ·';
+    const footer=document.createElement('div'); footer.className='stage-footer';
+    const count=document.createElement('span'); count.className='stage-count'; count.textContent='10자 · 4가지 활동';
+    const arrow=document.createElement('span'); arrow.textContent=s.done?'→':'🔒';
+    footer.appendChild(count); footer.appendChild(arrow);
+    card.appendChild(bar); card.appendChild(num); card.appendChild(title); card.appendChild(chars); card.appendChild(footer);
+    if(!s.done){
+      const lock=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      lock.setAttribute('viewBox','0 0 24 24'); lock.setAttribute('fill','none');
+      lock.setAttribute('stroke','currentColor'); lock.setAttribute('stroke-width','2');
       lock.style.cssText='position:absolute;top:12px;right:12px;width:18px;height:18px;opacity:0.25;';
       lock.innerHTML='<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
       card.appendChild(lock);
